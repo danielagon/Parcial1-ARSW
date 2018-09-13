@@ -36,15 +36,16 @@ public class PrimesController
 
     @RequestMapping(value = "/primes", method = RequestMethod.POST)
     public ResponseEntity<?> postPrimes(@RequestBody FoundPrime foundPrime){
-        if (primeService.getFoundPrimes().contains(foundPrime)){
-            return new ResponseEntity<>("El numero ya fue registrado por otro usuario", HttpStatus.NOT_ACCEPTABLE);
-        }else{
-            primeService.addFoundPrime(foundPrime);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+        for (FoundPrime f : primeService.getFoundPrimes()){
+            if (f.getPrime().equals(foundPrime.getPrime())){
+                return new ResponseEntity<>("El numero ya fue registrado por otro usuario", HttpStatus.NOT_ACCEPTABLE);
+            }
         }
+        primeService.addFoundPrime(foundPrime);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
     
-    @RequestMapping(value = "/primes/{primenumber}", method = RequestMethod.GET)
+    @RequestMapping(value = "/primes/{primeNumber}", method = RequestMethod.GET)
     public ResponseEntity<?> getPrimeNumber(@PathVariable String primeNumber){
         if (primeService.getPrime(primeNumber) == null){
             return new ResponseEntity<>("El numero no esta registrado",HttpStatus.NOT_FOUND);

@@ -13,29 +13,41 @@ import org.springframework.stereotype.Service;
 @Service
 public class PrimeServiceStub implements PrimeService{
     
-    List<FoundPrime> primes = new ArrayList<>();
+    private static final List<FoundPrime> primes = new ArrayList<>();
     
     @Override
-    public void addFoundPrime( FoundPrime foundPrime )
-    {
-        primes.add(foundPrime);
+    public void addFoundPrime( FoundPrime foundPrime ){
+        boolean found = false;
+        for (FoundPrime f: primes){
+            if (f.getPrime().equals(foundPrime.getPrime())){
+                found = true;
+            }
+        }
+        if (!found){
+            primes.add(foundPrime);
+        }
     }
 
     @Override
-    public List<FoundPrime> getFoundPrimes()
-    {
+    public List<FoundPrime> getFoundPrimes(){
         return primes;
     }
 
     @Override
-    public FoundPrime getPrime( String prime )
-    {
+    public FoundPrime getPrime( String prime ){
         FoundPrime p = null;
         for (FoundPrime i:primes){
-            if (i.equals(prime)){
+            if (i.getPrime().equals(prime)){
                 p = i;
             }
         }
         return p;
+    }
+    
+    static {
+        FoundPrime f = new FoundPrime();
+        f.setUser("John");
+        f.setPrime("32416190071");
+        primes.add(f);
     }
 }
