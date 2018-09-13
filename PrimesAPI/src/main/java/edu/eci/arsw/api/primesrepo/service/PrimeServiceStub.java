@@ -24,7 +24,9 @@ public class PrimeServiceStub implements PrimeService{
             }
         }
         if (!found){
-            primes.add(foundPrime);
+            synchronized (primes){
+                primes.add(foundPrime);
+            }
         }
     }
 

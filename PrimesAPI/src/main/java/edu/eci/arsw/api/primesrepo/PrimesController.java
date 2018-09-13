@@ -14,23 +14,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
 /**
  * @author Santiago Carrillo
  * 2/22/18.
  */
 @RestController
 @Service
-public class PrimesController
-{
+public class PrimesController{
+    
     @Autowired
     PrimeService primeService;
 
 
     @RequestMapping( value = "/primes", method = RequestMethod.GET )
-    public ResponseEntity<?> getPrimes()
-    {
+    public ResponseEntity<?> getPrimes(){
         return new ResponseEntity<>(primeService.getFoundPrimes(),HttpStatus.ACCEPTED);
     }
 
