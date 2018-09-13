@@ -18,13 +18,10 @@ public class PrimesFinderTool {
 		            
             try {
                 int maxPrim=1000;
-                
                 PrimesResultSet prs=new PrimesResultSet("john");
-                
                 PrimeFinder.findPrimes(new BigInteger("1"), new BigInteger("10000"), prs);
                 
-                while (PrimeFinder.running()){
-                    System.out.println("edu.eci.arsw.primefinder.PrimesFinderTool.main()");
+                while (!PrimeFinder.running()){
                     try {
                         //check every 10ms if the idle status (10 seconds without mouse
                         //activity) was reached.
@@ -40,19 +37,14 @@ public class PrimesFinderTool {
                     } catch (InterruptedException ex) {
                         Logger.getLogger(PrimesFinderTool.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
+
                 }
-                System.out.println("Prime numbers found:");
-                    
+                System.out.println("Prime numbers found:");                
                 System.out.println(prs.getPrimes());
-                
             } catch (InterruptedException ex) {
                 Logger.getLogger(PrimesFinderTool.class.getName()).log(Level.SEVERE, null, ex);
             }
-                        
-            
-            
-            
+   
             
 	}
 	

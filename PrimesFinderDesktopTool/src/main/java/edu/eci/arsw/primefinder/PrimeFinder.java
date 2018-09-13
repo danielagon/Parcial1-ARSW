@@ -8,6 +8,7 @@ import java.util.List;
 public class PrimeFinder{
         
 	private static List<PrimeThread> threadList = new LinkedList<>();
+        private static boolean run = false;
         
 	public static void findPrimes(BigInteger _a, BigInteger _b, PrimesResultSet prs) throws InterruptedException{
             
@@ -29,10 +30,6 @@ public class PrimeFinder{
                 for (PrimeThread i:threadList){
                     i.start();
                 }
-                
-                for (PrimeThread i:threadList){
-                    i.join();
-                }      
 	}
         
         public static void pause(){
@@ -42,13 +39,19 @@ public class PrimeFinder{
         }
         
         public static void launch(){
-            for (PrimeThread i:threadList){
+            int cont = 0;
+            for (PrimeThread i: threadList){
+                if (i.isRunning()){
+                    cont++;
+                }
                 i.started();
+            }
+            if (cont == threadList.size()){
+                run = true;
             }
         }
         
         public static boolean running(){
-            boolean run = false;
             for (PrimeThread i:threadList){
                 if (i.isRunning()){
                     run = true;
